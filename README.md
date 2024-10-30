@@ -4,7 +4,6 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 
 ## Table of Contents
 
-- [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Setup Instructions](#setup-instructions)
   - [Backend Setup](#backend-setup)
@@ -34,18 +33,33 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 
 1. **Navigate to the backend directory:**
 
-   ```bash
-   cd backend```
+   ```
+   bash
+   cd backend
+   ```
    
 2. **Install dependencies:**
    ```npm install```
 
-3. **Create a ``.env`` file:**
-   Create a ``.env`` file in the ``backend/`` directory with the following content:
-   ```CLIENT_ID=your-client-id
-      REDIRECT_URI=http://localhost:8081/callback
-      CUSTOS_BASE_URL=https://api.playground.usecustos.org```
-   Replace ``your-client-id`` with your actual Custos client ID. 
+3. **Create a `.env` file:**
+   Create a `.env` file in the `backend/` directory with the following content:
+   
+   ```
+   CLIENT_ID=your-client-id
+   REDIRECT_URI=http://localhost:8081/callback
+   CUSTOS_BASE_URL=https://api.playground.usecustos.org
+   ```
+   
+   Replace `your-client-id` with your actual Custos client ID.
+   Ensure the `REDIRECT_URI` matches exactly with the one registered in Custos.
+
+4. **Start the backend server:**
+   ```node server.js```
+   The backend server will run on `http://localhost:8081`
+
+### Frontend Setup
+
+   
 
 
 
