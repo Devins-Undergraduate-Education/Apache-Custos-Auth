@@ -108,7 +108,7 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 - `/`: Login page
 - `/dashboard`: Dashboard displaying user info
 
-## Enviroment Variables
+## Environment Variables
 
 ### Backend
 
