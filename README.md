@@ -14,10 +14,6 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
   - [Frontend](#frontend)
 - [Environment Variables](#environment-variables)
 - [Important Notes](#important-notes)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-
 
 ## Prerequisites
 
@@ -34,8 +30,7 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 1. **Navigate to the backend directory:**
 
    ```
-   bash
-   cd backend
+   cd custos-auth-backend
    ```
    
 2. **Install dependencies:**
@@ -59,18 +54,88 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 
 ### Frontend Setup
 
+1. **Navigate to the frontend directory:**
+   ```cd custos-auth-frontend```
    
+2. **Install dependencies:**
+   ```npm install```
 
+3. **Start the frontend application:**
+   ```npm start```
+   The frontend application will run on `http://localhost:3000`
 
+## Running the Application
 
+1. **Access the frontend application:**
+   Open your web browser and navigate to `http://localhost:3000`
 
+2. **Initiate the login process:**
+   Click the "**Login** button to be redirected to the Custos authentication page.
 
+3. **Authenticate with Custos:**
+   Enter your Custos user credentials to log in.
 
+4. **View user information:**
+   After successful authentication, you will be directed to the dashboard displaying your name and email.
 
+## Project Details
 
+### Backend
 
+**Technologies Used:**
+- Node.js
+- Express.js
+- Axios
+- express-session
+- dotenv
 
+**Key Files:**
+- `server.js`: Main server file handling authentication routes
+- `.env`: Enviroment variables (not committed to version control)
 
+### Frontend
 
+**Technologies Used:**
+- React
+- react-router-dom
 
+**Key Files:**
+- `src/App.ks`: Main application component with routing
+- `src/Login.js`: Component with login button
+- `src/Dashboard.js`: Component displaying user information
 
+**Routes**
+- `/`: Login page
+- `/dashboard`: Dashboard displaying user info
+
+## Enviroment Variables
+
+### Backend
+
+Create a `.env` file in the `custos-auth-backend/` directory with the following variables:
+  ```
+  CLIENT_ID=your-client-id
+  REDIRECT_URI=http://localhost:8081/callback
+  CUSTOS_BASE_URL=https://api.playground.usecustos.org
+  ```
+  - **CLIENT_ID:** Your Custos client ID
+  - **REDIRECT_URI:** Must match exactly with the one registered in Custos
+  - **CUSTOS_BASE_URL:** The base URL for the Custos API
+
+## Important Notes
+
+### Environment Variables:
+
+Ensure that your `.env` file is **not** committed to the repository. It's included in `.gitignore` to prevent exposing sensitive information.
+
+### Custos Client Registration
+
+If you haven't registered your application with Custos, you'll need to do so to obtain your `CLIENT_ID` and set up the `REDIRECT_URI`.
+
+### HTTPS Considerations:
+
+For development purposes, the application runs over HTTP. For production environments, make sure to use HTTPS to secure user data.
+
+### Dependency Installation:
+
+Make sure to run `npm install` in both the `custos-auth-frontend` and `custos-auth-backend` directories to install all required dependencies.
