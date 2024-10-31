@@ -4,7 +4,7 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 
 ## Table of Contents
 
-- [Quickstart{(#quickstart)
+- [Quickstart}(#quickstart)
 - [Prerequisites](#prerequisites)
 - [Setup Instructions](#setup-instructions)
   - [Backend Setup](#backend-setup)
