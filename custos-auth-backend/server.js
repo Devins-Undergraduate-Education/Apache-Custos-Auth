@@ -12,9 +12,9 @@ const app = express();
 app.use(express.json());
 app.use(
   session({
-    secret: 'your-secret-key', // Replace with a secure secret in production
+    secret: 'your-secret-key', // Replace with a strong secret in production
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { secure: false }, // Set to true if using HTTPS
   })
 );
@@ -43,14 +43,14 @@ app.get('/login', (req, res) => {
 
   // Construct the authorization URL
   const custosAuthURL =
-    `${custosBaseURL}/api/v1/identity-management/authorize` +
-    `?response_type=code` +
-    `&client_id=${encodeURIComponent(clientId)}` +
-    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-    `&scope=${encodeURIComponent('openid profile email')}` +
-    `&state=${encodeURIComponent(state)}` +
-    `&code_challenge=${encodeURIComponent(codeChallenge)}` +
-    `&code_challenge_method=S256`;
+  `${custosBaseURL}/api/v1/identity-management/authorize` +
+  `?response_type=code` +
+  `&client_id=${encodeURIComponent(clientId)}` +
+  `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+  `&scope=${encodeURIComponent('openid profile email offline_access')}` + // Ensure 'offline_access' is included
+  `&state=${encodeURIComponent(state)}` +
+  `&code_challenge=${encodeURIComponent(codeChallenge)}` +
+  `&code_challenge_method=S256`;
 
   console.log('Authorization Request redirect_uri:', redirectUri);
   console.log('Redirecting to Custos authorization URL:', custosAuthURL);
@@ -82,7 +82,7 @@ app.get('/callback', async (req, res) => {
   try {
     console.log('Token Request redirect_uri:', redirectUri);
 
-    // Exchange authorization code for access token
+    // Exchange authorization code for access token and refresh token
     const params = new URLSearchParams();
     params.append('grant_type', 'authorization_code');
     params.append('code', code);
@@ -100,7 +100,18 @@ app.get('/callback', async (req, res) => {
       }
     );
 
-    const { access_token } = tokenResponse.data;
+    const { access_token, refresh_token } = tokenResponse.data;
+
+    if (!access_token) {
+      throw new Error('No access_token received');
+    }
+
+    // Store refresh_token in session for later use during logout
+    if (refresh_token) {
+      req.session.refreshToken = refresh_token;
+    } else {
+      console.warn('No refresh_token received');
+    }
 
     // Retrieve user info
     const userInfoResponse = await axios.get(`${custosBaseURL}/api/v1/user-management/userinfo`, {
@@ -157,6 +168,7 @@ app.get('/callback', async (req, res) => {
         `&email=${encodeURIComponent(userInfo.email)}` +
         `&groups=${encodeURIComponent(JSON.stringify(groupNames))}`
     );
+
   } catch (error) {
     console.error(
       'Authentication error:',
@@ -167,8 +179,35 @@ app.get('/callback', async (req, res) => {
 });
 
 // Logout endpoint
-app.get('/logout', (req, res) => {
-  // Optionally, you can also revoke tokens with Custos here if you have the refresh_token
+app.get('/logout', async (req, res) => {
+  const refreshToken = req.session.refreshToken;
+
+  if (refreshToken) {
+    try {
+      // Revoke the refresh token with Custos
+      const logoutResponse = await axios.post(
+        `${custosBaseURL}/api/v1/identity-management/user/logout`,
+        {
+          refresh_token: refreshToken,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('Refresh token revoked successfully:', logoutResponse.data);
+    } catch (error) {
+      console.error(
+        'Error revoking refresh token:',
+        error.response ? error.response.data : error.message
+      );
+    }
+  } else {
+    console.warn('No refresh_token found in session.');
+  }
+
+  // Destroy the session
   req.session.destroy((err) => {
     if (err) {
       console.error('Error destroying session during logout:', err);
