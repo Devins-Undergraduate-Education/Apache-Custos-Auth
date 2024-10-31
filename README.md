@@ -19,7 +19,7 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 
 ## Quickstart 
 
-**These instructions assume all necessary files and dependencies are installed. This is intended to be a quick-reference guide for frontend and backend startup. 
+**These instructions assume all necessary files and dependencies are installed. This is intended to be a quick-reference guide for frontend and backend startup.**
 
 ### Backend
 
