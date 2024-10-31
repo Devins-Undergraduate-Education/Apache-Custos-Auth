@@ -22,12 +22,19 @@ app.use(
 // Custos base URL and client configuration
 const custosBaseURL = process.env.CUSTOS_BASE_URL || 'https://api.playground.usecustos.org';
 const clientId = process.env.CLIENT_ID; // Your client ID
-const redirectUri = process.env.REDIRECT_URI; // Must match exactly with the one registered in Custos
+const redirectUri = process.env.REDIRECT_URI || 'http://localhost:8081/callback'; // Must match exactly with the one registered in Custos
 
+// Endpoint to initiate login
 app.get('/login', (req, res) => {
   // Generate state parameter
   const state = crypto.randomBytes(16).toString('hex');
   req.session.oauthState = state;
+
+  // Store the selected role from query parameters, if any
+  const role = req.query.role;
+  if (role) {
+    req.session.selectedRole = role;
+  }
 
   // Generate code verifier and code challenge for PKCE
   const codeVerifier = crypto.randomBytes(64).toString('hex');
@@ -52,6 +59,7 @@ app.get('/login', (req, res) => {
   res.redirect(custosAuthURL);
 });
 
+// Callback endpoint to handle Custos response
 app.get('/callback', async (req, res) => {
   const { code, state } = req.query;
   const storedState = req.session.oauthState;
@@ -102,12 +110,52 @@ app.get('/callback', async (req, res) => {
     });
 
     const userInfo = userInfoResponse.data;
+    const userId = userInfo.sub; // Assuming 'sub' contains the user ID
 
-    // Redirect to frontend with user info
+    // Check if a selected role was stored in the session
+    const selectedRole = req.session.selectedRole;
+    // Clear the selected role from the session
+    delete req.session.selectedRole;
+
+    let groupNames = [];
+
+    if (selectedRole) {
+      // Option 3: Use the selected role for testing
+      groupNames = [selectedRole];
+    } else {
+      // Option 1: Attempt to fetch the user's group memberships
+      try {
+        const groupMembershipsResponse = await axios.get(
+          `${custosBaseURL}/api/v1/group-management/users/${encodeURIComponent(userId)}/group-memberships`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`, // Use user's access token
+            },
+            params: {
+              client_id: clientId,
+            },
+          }
+        );
+
+        const userGroups = groupMembershipsResponse.data.groups || [];
+        // Extract group names
+        groupNames = userGroups.map((group) => group.name);
+      } catch (groupError) {
+        console.error(
+          'Error fetching group memberships:',
+          groupError.response ? groupError.response.data : groupError.message
+        );
+        // Handle error (e.g., set groupNames to empty array or default value)
+        groupNames = [];
+      }
+    }
+
+    // Pass user info and groups to the frontend
     res.redirect(
-      `http://localhost:3000/dashboard?name=${encodeURIComponent(userInfo.name)}&email=${encodeURIComponent(
-        userInfo.email
-      )}`
+      `http://localhost:3000/dashboard` +
+        `?name=${encodeURIComponent(userInfo.name)}` +
+        `&email=${encodeURIComponent(userInfo.email)}` +
+        `&groups=${encodeURIComponent(JSON.stringify(groupNames))}`
     );
   } catch (error) {
     console.error(
@@ -118,8 +166,21 @@ app.get('/callback', async (req, res) => {
   }
 });
 
+// Logout endpoint
+app.get('/logout', (req, res) => {
+  // Optionally, you can also revoke tokens with Custos here if you have the refresh_token
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session during logout:', err);
+      return res.status(500).send('Unable to logout');
+    }
+    // Redirect to frontend login page
+    res.redirect('http://localhost:3000/');
+  });
+});
+
 // Start the server
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
