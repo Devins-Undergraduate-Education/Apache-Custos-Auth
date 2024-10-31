@@ -159,40 +159,30 @@ Make sure to run `npm install` in both the `custos-auth-frontend` and `custos-au
 
 ### Initiate User Authentication
 
-**Purpose:** Redirects the user to Custos to begin the authentication process.
-
-**Endpoint:** `GET /api/v1/identity-management/authorize`
-
-**Location in Code:** `server.js` within the `/login` route
+- **Purpose:** Redirects the user to Custos to begin the authentication process.
+- **Endpoint:** `GET /api/v1/identity-management/authorize`
+- **Location in Code:** `server.js` within the `/login` route
 
 ### Exchange Authorization Code for Tokens
 
-**Purpose:** Exchanges the received authorization code for access and refresh tokens.
-
-**Endpoint:** `POST /api/v1/identity-management/token`
-
-**Location in Code:** `server.js` within the `/callback` route
+- **Purpose:** Exchanges the received authorization code for access and refresh tokens.
+- **Endpoint:** `POST /api/v1/identity-management/token`
+- **Location in Code:** `server.js` within the `/callback` route
 
 ### Retrieve User Information
 
-**Purpose:** Fetches the authenticated user's profile details such as name and email.
-
-**Endpoint:** `GET /api/v1/user-management/userinfo`
-
-**Location in Code:** `server.js` within the `/callback` route
+- **Purpose:** Fetches the authenticated user's profile details such as name and email.
+- **Endpoint:** `GET /api/v1/user-management/userinfo`
+- **Location in Code:** `server.js` within the `/callback` route
 
 ### Fetch User Group Memberships
 
-**Purpose:** Obtains the groups or roles assigned to the user for authorization purposes.
-
-**Endpoint:** `GET /api/v1/group-management/users/{userId}/group-memberships`
-
-**Location in Code:** `server.js` within the `/callback` route
+- **Purpose:** Obtains the groups or roles assigned to the user for authorization purposes.
+- **Endpoint:** `GET /api/v1/group-management/users/{userId}/group-memberships`
+- **Location in Code:** `server.js` within the `/callback` route
 
 ### Revoke Refresh Token and Logout User
 
-**Purpose:** Revokes the user's refresh token to invalidate their session and logs them out securely.
-
-**Endpoint:** `POST /api/v1/identity-management/user/logout`
-
-**Location in Code:** `server.js` within the `/logout` route
+- **Purpose:** Revokes the user's refresh token to invalidate their session and logs them out securely.
+- **Endpoint:** `POST /api/v1/identity-management/user/logout`
+- **Location in Code:** `server.js` within the `/logout` route
