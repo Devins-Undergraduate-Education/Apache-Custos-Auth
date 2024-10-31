@@ -4,6 +4,7 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
 
 ## Table of Contents
 
+- [Quickstart{(#quickstart)
 - [Prerequisites](#prerequisites)
 - [Setup Instructions](#setup-instructions)
   - [Backend Setup](#backend-setup)
@@ -14,6 +15,19 @@ This project demonstrates how to integrate a **frontend** and **backend** applic
   - [Frontend](#frontend)
 - [Environment Variables](#environment-variables)
 - [Important Notes](#important-notes)
+
+
+## Quickstart 
+
+**These instructions assume all necessary files and dependencies are installed. This is intended to be a quick-reference guide for frontend and backend startup. 
+
+### Backend
+
+```node server.js```
+
+### Frontend
+
+```npm start```
 
 ## Prerequisites
 
