@@ -1,0 +1,107 @@
+/* src/Login.css */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1580281657521-478a1a0df841?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .login-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+  }
+  
+  .login-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .login-subtitle {
+    font-family: 'Arial', sans-serif;
+    color: #34495e;
+    margin-bottom: 30px;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .login-button {
+    padding: 12px 20px;
+    margin: 10px 0;
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .normal-login {
+    background-color: #2980b9;
+    color: #fff;
+  }
+  
+  .normal-login:hover {
+    background-color: #1f6391;
+  }
+  
+  .test-login-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .role-select {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+  }
+  
+  .test-login {
+    background-color: #27ae60;
+    color: #fff;
+  }
+  
+  .test-login:hover {
+    background-color: #1e8449;
+  }
+  
+  .divider {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #7f8c8d;
+  }
+  
+  @media (max-width: 480px) {
+    .login-card {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .login-button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  
+    .role-select {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
+  

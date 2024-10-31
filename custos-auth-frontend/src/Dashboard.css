@@ -1,0 +1,135 @@
+/* src/Dashboard.css */
+
+.dashboard-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+  }
+  
+  .dashboard-header {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .dashboard-header h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .logout-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #c0392b;
+  }
+  
+  .dashboard-content {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .user-info {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  
+  .user-info h2 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  
+  .feature-section {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  
+  .feature-section h3 {
+    margin-top: 0;
+    color: #16a085;
+  }
+  
+  .feature-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .feature-button:hover {
+    background-color: #1f6391;
+  }
+  
+  .no-access-message {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    color: #c0392b;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-content {
+      padding: 20px 10px;
+    }
+  
+    .hospital-icon {
+      width: 40px;
+      height: 40px;
+      left: 10px;
+      top: 10px;
+    }
+  
+    .dashboard-header h1 {
+      font-size: 20px;
+    }
+  
+    .logout-button {
+      padding: 6px 12px;
+      font-size: 12px;
+      right: 10px;
+      top: 10px;
+    }
+  
+    .feature-button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }  
